@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace UnityEngine
+namespace Electrospeed.Diag
 {
     /// <summary>
     /// A class containing methods for showing a Windows Message Box. <para/>
@@ -9,6 +9,8 @@ namespace UnityEngine
     /// </summary>
     public class WinMessageBox
     {
+        const bool DEFAULT_CAPTURE_FOCUS = false;
+
         [DllImport("user32.dll")]
         static extern int MessageBox(IntPtr hWnd, string lpText, string lpCaption, uint uType); //shows windows messagebox
         [DllImport("user32.dll")]
@@ -42,7 +44,18 @@ namespace UnityEngine
         /// <returns>The result of the MessageBox. <see cref="WinMessageBoxResult"/></returns>
         public static WinMessageBoxResult Show(string messageText, string messageCaption, WinMessageBoxFlags flags)
         {
-            return Show(messageText, messageCaption, flags, true);
+            return Show(messageText, messageCaption, flags, DEFAULT_CAPTURE_FOCUS);
+        }
+
+        /// <summary>
+        /// Shows a WindowsMessageBox with no caption.
+        /// </summary>
+        /// <param name="messageText">The text to display in the MessageBox body.  Use standard carriage returns to delimit line endings.</param>
+        /// <param name="flags">Flags that determine the appearance and behavior of the MessageBox. See <see cref="WinMessageBoxFlags"/> for more information.</param>
+        /// <returns>The result of the MessageBox. <see cref="WinMessageBoxResult"/></returns>
+        public static WinMessageBoxResult Show(string messageText, WinMessageBoxFlags flags)
+        {
+            return Show(messageText, string.Empty, flags, DEFAULT_CAPTURE_FOCUS);
         }
 
         /// <summary>
@@ -54,18 +67,7 @@ namespace UnityEngine
         /// <returns>The result of the MessageBox. <see cref="WinMessageBoxResult"/></returns>
         public static WinMessageBoxResult Show(string messageText, string messageCaption)
         {
-            return Show(messageText, messageCaption, WinMessageBoxFlags.Default, true);
-        }
-
-        /// <summary>
-        /// Shows a WindowsMessageBox with no caption.
-        /// </summary>
-        /// <param name="messageText">The text to display in the MessageBox body.  Use standard carriage returns to delimit line endings.</param>
-        /// <param name="flags">Flags that determine the appearance and behavior of the MessageBox. See <see cref="WinMessageBoxFlags"/> for more information.</param>
-        /// <returns>The result of the MessageBox. <see cref="WinMessageBoxResult"/></returns>
-        public static WinMessageBoxResult Show(string messageText, WinMessageBoxFlags flags)
-        {
-            return Show(messageText, string.Empty, flags, true);
+            return Show(messageText, messageCaption, WinMessageBoxFlags.Default, DEFAULT_CAPTURE_FOCUS);
         }
 
         /// <summary>
@@ -75,7 +77,7 @@ namespace UnityEngine
         /// <returns>The result of the MessageBox. <see cref="WinMessageBoxResult"/></returns>
         public static WinMessageBoxResult Show(string messageText)
         {
-            return Show(messageText, string.Empty, WinMessageBoxFlags.Default, true);
+            return Show(messageText, string.Empty, WinMessageBoxFlags.Default, DEFAULT_CAPTURE_FOCUS);
         }
     }
 
@@ -117,7 +119,7 @@ namespace UnityEngine
         defButton3 = 0x00000200, //MB_DEFBUTTON3
         defButton4 = 0x00000300, //MB_DEFBUTTON4
 
-        modalApplModal = 0x00000000, //MB_APPLMODAL
+        modalAppl = 0x00000000, //MB_APPLMODAL
         modalSystem = 0x00001000, //MB_SYSTEMMODAL
         modalTask = 0x00002000 //MB_TASKMODAL
     }
