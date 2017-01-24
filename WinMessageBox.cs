@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Electrospeed.Diag
+namespace WinMessageBox
 {
     /// <summary>
     /// A class containing methods for showing a Windows Message Box. <para/>
